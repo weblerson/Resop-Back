@@ -1,5 +1,5 @@
 from config import *
-from models import User, Token
+from models import Users, Tokens
 
 class Verify:
     @classmethod
@@ -12,7 +12,7 @@ class Verify:
     @classmethod
     def email_not_exists(cls, email: str):
         try:
-            if session.query(session.query(User).filter(User.email == email).exists()).one()[0]:
+            if session.query(session.query(Users).filter(Users.email == email).exists()).one()[0]:
                 return {"success": False, "response": "O email passado já existe."}
 
             return {"success": True, "response": ""}

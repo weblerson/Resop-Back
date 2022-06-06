@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import Optional
 from fastapi.middleware.cors import CORSMiddleware
-from models import User, Token
+from models import Users, Tokens
 import bcrypt
 from contrib import Verify
 
@@ -25,7 +25,7 @@ app.add_middleware(
 
 @app.post("/register")
 def register(user: User):
-    email_not_exists = Verify.email_not_exists(email = user.email)
+    email_not_exists = Verify.email_not_exists(email = f"{user.email}@lerson.com")
     password_strong = Verify.password_length(password = user.senha)
 
     if not password_strong["success"]:
@@ -35,7 +35,7 @@ def register(user: User):
         b_pass = user.senha.encode()
         h_pass = bcrypt.hashpw(b_pass, bcrypt.gensalt())
 
-        session.add(User(nome = user.nome, email = user.email, senha = h_pass.decode()))
+        session.add(Users(nome = user.nome, email = f"{user.email}@lerson.com", senha = h_pass.decode()))
         session.commit()
 
         return {"success": True, "response": "Usuário cadastrado com sucesso!"}
