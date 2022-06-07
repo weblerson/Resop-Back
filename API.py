@@ -9,7 +9,7 @@ from contrib import Verify
 
 class User(BaseModel):
     ID: Optional[int]
-    nome: str
+    nome: Optional[str]
     email: str
     senha: Optional[str]
 
