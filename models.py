@@ -11,7 +11,8 @@ class Users(Base):
 class Tokens(Base):
     __tablename__ = "tokens"
     email_usuario = Column(String(50), primary_key = True, nullable = False)
-    token = Column(String(50), nullable = False)
+    token = Column(String(500), nullable = False)
     data_criacao = Column(DateTime, default = datetime.datetime.now)
+    public_key = Column(String(500), nullable = False)
 
 Base.metadata.create_all(engine)
