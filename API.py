@@ -10,8 +10,9 @@ from contrib import Verify, Token
 class User(BaseModel):
     ID: Optional[int]
     nome: Optional[str]
-    email: str
+    email: Optional[str]
     senha: Optional[str]
+    token: Optional[str]
 
 app = FastAPI()
 
@@ -73,3 +74,12 @@ def login(user: User):
             return {"success": False, "response": created_token["response"]}
 
     return {"success": False, "response": user_exists["response"]}
+
+@app.post("/data")
+def get_user_id(user: User):
+    user_id = Token.get_user_id(user.token)
+
+    if user_id["success"]:
+        return {"success": True, "response": user_id["response"]}
+
+    return {"success": False, "response": ""}

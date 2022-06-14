@@ -152,4 +152,13 @@ class Token:
             return {"success": True, "response": user.token}
 
         return {"success": False, "response": ""}
+
+    @staticmethod
+    def get_user_id(token: str):
+        if session.query(session.query(Tokens).filter(Tokens.token == token).exists()).one()[0]:
+            user = session.query(Tokens).filter(Tokens.token == token).one()
+
+            return {"success": True, "response": user.ID}
+
+        return {"success": False, "response": ""}
         
